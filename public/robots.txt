@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://iceydrops.co.ke/sitemap.xml
