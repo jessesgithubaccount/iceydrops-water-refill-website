@@ -97,7 +97,7 @@ function ProductCard({ p, onAdd, open }) {
 }
 
 /* ---------- Refill / purchase picker ---------- */
-function Picker({ open, onPick, onClose }) {
+function Picker({ open, size, onPick, onClose }) {
   const firstBtn = useRef();
   useEffect(() => { if (open) firstBtn.current?.focus(); }, [open]);
   return (
@@ -105,9 +105,9 @@ function Picker({ open, onPick, onClose }) {
       <div className="pkb" role="dialog" aria-modal="true" aria-labelledby="pkt">
         <button type="button" className="x" aria-label="Close" onClick={onClose}>&times;</button>
         <h3 id="pkt">What would you like?</h3>
-        <p>Choose how you want your 20L water.</p>
-        <button ref={firstBtn} type="button" className="btn" onClick={() => onPick("r20")}>Refill</button>
-        <button type="button" className="btn" onClick={() => onPick("n20")}>Purchase bottle + water</button>
+        <p>Choose how you want your {size}L water.</p>
+        <button ref={firstBtn} type="button" className="btn" onClick={() => onPick("r" + size)}>Refill</button>
+        <button type="button" className="btn" onClick={() => onPick("n" + size)}>Purchase bottle + water</button>
       </div>
     </div>
   );
@@ -563,6 +563,7 @@ function Home({ cart, setCart }) {
   }, []);
   const [drawer, setDrawer] = useState(false);
   const [picker, setPicker] = useState(false);
+  const [pickSize, setPickSize] = useState("20");
   const [menu, setMenu] = useState(false);
   const pending = useRef(null); // { btn, done } waiting on the picker
   const storeOpen = useStoreOpen(); // open 9:00 AM to 10:00 PM Kenya time
@@ -576,7 +577,7 @@ function Home({ cart, setCart }) {
 
   const onAdd = (p, btn, done) => {
     if (!storeOpen) return;
-    if (p.ask) { pending.current = { btn, done }; setPicker(true); return; }
+    if (p.ask) { pending.current = { btn, done }; setPickSize(p.ask === true ? "20" : p.ask); setPicker(true); return; }
     bump(p.id); done();
   };
   const closePicker = () => {
@@ -705,7 +706,7 @@ function Home({ cart, setCart }) {
       </a>
 
       <BackToTop />
-      <Picker open={picker} onPick={pick} onClose={closePicker} />
+      <Picker open={picker} size={pickSize} onPick={pick} onClose={closePicker} />
       <CartDrawer open={drawer} onClose={() => setDrawer(false)} cart={cart} setQty={bump} storeOpen={storeOpen} />
     </>
   );

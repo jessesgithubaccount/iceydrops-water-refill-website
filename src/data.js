@@ -20,11 +20,15 @@ export const LEGAL_UPDATED = "11 October 2026";
 
 // price: number in KSh to show prices and a total; null hides prices
 export const PRODUCTS = [
-  { id: "w20", name: "20L Water", note: "Free delivery", price: null, img: "/product-20l.jpg", ask: true },
+  { id: "w20", name: "20L Water", note: "Free delivery", price: null, img: "/product-20l.jpg", ask: "20" },
   { id: "r20", name: "20L Refill", note: "Free delivery", price: null, img: "/product-20l.jpg", hide: true },
   { id: "n20", name: "20L New Bottle + Water", note: "Free delivery", price: null, img: "/product-20l.jpg", hide: true },
-  { id: "m10", name: "10L Bottle", note: "Free delivery", price: null, img: "/product-10l.jpg" },
-  { id: "s5", name: "5L Bottle", note: "Free delivery", price: null, img: "/product-5l.jpg" },
+  { id: "m10", name: "10L Water", note: "Free delivery", price: null, img: "/product-10l.jpg", ask: "10" },
+  { id: "r10", name: "10L Refill", note: "Free delivery", price: null, img: "/product-10l.jpg", hide: true },
+  { id: "n10", name: "10L New Bottle + Water", note: "Free delivery", price: null, img: "/product-10l.jpg", hide: true },
+  { id: "s5", name: "5L Water", note: "Free delivery", price: null, img: "/product-5l.jpg", ask: "5" },
+  { id: "r5", name: "5L Refill", note: "Free delivery", price: null, img: "/product-5l.jpg", hide: true },
+  { id: "n5", name: "5L New Bottle + Water", note: "Free delivery", price: null, img: "/product-5l.jpg", hide: true },
 ];
 
 export const OFFERS = [
