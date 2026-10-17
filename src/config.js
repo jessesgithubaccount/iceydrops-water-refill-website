@@ -1,6 +1,5 @@
 export const WHATSAPP = "254710747388";
-export const GOOGLE_MAPS_KEY = import.meta.env.VITE_GOOGLE_MAPS_KEY || "AIzaSyAiUVjxlXXQ9hr9k5tSn3dl2mdjbPYAENI";
-export const CARTO_KEY = import.meta.env.VITE_CARTO_KEY || "";
+export const GOOGLE_MAPS_KEY = "AIzaSyAiUVjxlXXQ9hr9k5tSn3dl2mdjbPYAENI";
 export const MAP_QUERY = "-1.396972,36.750361";
 export const MAP_LABEL = "Ongata Rongai, Mandela Road";
 export const LEGAL_UPDATED = "11 October 2026";
