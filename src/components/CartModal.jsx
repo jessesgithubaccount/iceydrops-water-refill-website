@@ -244,3 +244,207 @@ export default function CartModal({ cart, setCart, onClose }) {
   const shipOpt = (k, label, small, sub) => (
     <label key={k} className={"cp-opt" + (mode === k ? " on" : "")}>
       <input type="radio" name="ship" className="vh" checked={mode === k} onChange={() => choose(k)} />
+      <span className="cp-rad" aria-hidden="true" />
+      <span className="cp-ot">
+        <b>{label}</b>
+        {small && (
+          <>
+            <i>•</i>
+            <small>{small}</small>
+          </>
+        )}
+        <span className="sub">{sub}</span>
+      </span>
+    </label>
+  );
+
+  return (
+    <div
+      className={"cm" + (shown ? " on" : "")}
+      onMouseDown={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div
+        className={"cm-box" + (empty ? " empty" : "")}
+        ref={box}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Your cart"
+      >
+        <div className="cm-head">
+          <h2>
+            <IcCart />
+            Your cart
+            {count > 0 && <span className="cm-n">{count}</span>}
+          </h2>
+          <button type="button" className="cm-close" aria-label="Close cart" onClick={onClose}>
+            ×
+          </button>
+        </div>
+
+        {empty ? (
+          <div className="cm-body">
+            <div className="cm-empty">
+              <IcCart />
+              <p>Your cart is empty.</p>
+              <button type="button" className="btn" onClick={onClose}>
+                Browse our water
+              </button>
+            </div>
+          </div>
+        ) : (
+          <form className="cm-form" onSubmit={submit} noValidate>
+            <div className="cm-body">
+              {!storeOpen && (
+                <p className="closedbar" role="status">
+                  {CLOSED_TEXT}
+                </p>
+              )}
+
+              {lines.map((p) => (
+                <div className="cm-row" key={p.id}>
+                  <div className="cm-img">
+                    <img src={p.img} alt="" />
+                  </div>
+                  <div className="cm-info">
+                    <h3>{p.name}</h3>
+                    <small>{p.note}</small>
+                    <button type="button" className="cm-rm" onClick={() => remove(p.id)}>
+                      Remove
+                    </button>
+                  </div>
+                  <div className="cm-ctl">
+                    <div className="cm-qty">
+                      <button type="button" aria-label={`Fewer ${p.name}`} onClick={() => setQty(p.id, -1)}>
+                        −
+                      </button>
+                      <b>{cart[p.id]}</b>
+                      <button
+                        type="button"
+                        aria-label={`More ${p.name}`}
+                        disabled={!storeOpen}
+                        onClick={() => setQty(p.id, 1)}
+                      >
+                        +
+                      </button>
+                    </div>
+                    {p.price != null && <span className="cm-line">{money(p.price * cart[p.id])}</span>}
+                  </div>
+                </div>
+              ))}
+
+              <div className="cm-actions">
+                <button type="button" className="cm-more" onClick={onClose}>
+                  + Add more bottles
+                </button>
+                <button type="button" className="cm-cancel" onClick={cancelOrder}>
+                  Cancel order
+                </button>
+              </div>
+
+              <div className="cm-sec">
+                <h3>How would you like to get it?</h3>
+                {shipOpt("delivery", "Delivery", "Free", "We bring it to your door")}
+                {shipOpt("pickup", "Store pickup", "Free", MAP_LABEL)}
+              </div>
+
+              <div className="cm-fields">
+                <div className="cm-2">
+                  <label>
+                    Name
+                    <input type="text" value={f.name} onChange={set("name")} autoComplete="name" placeholder="Your name" />
+                  </label>
+                  <label>
+                    Phone
+                    <input
+                      type="tel"
+                      inputMode="tel"
+                      value={f.phone}
+                      onChange={set("phone")}
+                      autoComplete="tel"
+                      placeholder="07xx xxx xxx"
+                    />
+                  </label>
+                </div>
+
+                {mode === "delivery" && (
+                  <>
+                    <label>
+                      Delivery location
+                      <input
+                        type="text"
+                        value={f.loc}
+                        onChange={set("loc")}
+                        autoComplete="street-address"
+                        placeholder="Estate, street, house / building no."
+                      />
+                    </label>
+
+                    <div className="pin">
+                      {pinState === "done" && pin ? (
+                        <div className="pin-ok">
+                          <span>✓ Location pinned</span>
+                          <button type="button" onClick={clearPin}>
+                            Clear
+                          </button>
+                        </div>
+                      ) : (
+                        <button type="button" className="pin-btn" onClick={getPin} disabled={pinState === "loading"}>
+                          {pinState === "loading" ? "Finding you…" : "📍 Pin my current location"}
+                        </button>
+                      )}
+                      <small>{pinHint}</small>
+                    </div>
+
+                    <div className={"mapwrap" + (mapFull ? " full" : "")}>
+                      <button
+                        type="button"
+                        className="map-exp"
+                        onClick={() => setMapFull((v) => !v)}
+                        aria-label={mapFull ? "Close full-screen map" : "Open full-screen map"}
+                      >
+                        {mapFull ? "Done" : "⤢ Full screen"}
+                      </button>
+                      <MapPicker pin={mapPin} onMove={movePin} onFail={() => setMapFailed(true)} />
+                      <div className="map-bar">
+                        <b>Delivery location</b>
+                        {f.loc || "Tap the map or drag the pin to your spot"}
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                <label>
+                  Notes (optional)
+                  <textarea rows={2} value={f.notes} onChange={set("notes")} placeholder="Gate colour, landmark, best time…" />
+                </label>
+              </div>
+            </div>
+
+            <div className="cm-foot">
+              <div className="err" role="alert">
+                {err}
+              </div>
+              <div className="cm-sum">
+                <span>
+                  Total
+                  <small>
+                    {count} item{count === 1 ? "" : "s"} • Free delivery
+                  </small>
+                </span>
+                <b>{allPriced ? money(total) : "—"}</b>
+              </div>
+              <button type="submit" className="cp-go">
+                <span>Send order on WhatsApp</span>
+                <span>→</span>
+              </button>
+              <Consent action="sending your order" />
+            </div>
+          </form>
+        )}
+      </div>
+    </div>
+  );
+}
