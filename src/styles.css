@@ -511,6 +511,10 @@ footer .legal-links a:hover{color:#fff}
 .cm-line{font-weight:700;font-size:15px}
 .cm-more{border:0;background:none;margin:8px 0 0;padding:6px 0;color:var(--blue);font:600 14px var(--font);cursor:pointer}
 .cm-more:hover{text-decoration:underline}
+.cm-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:8px}
+.cm-actions .cm-more{margin:0}
+.cm-cancel{border:0;background:none;padding:6px 0;color:#d93a3a;font:600 14px var(--font);cursor:pointer}
+.cm-cancel:hover{text-decoration:underline}
 .cm-sec{margin-top:22px}
 .cm-sec h3{font-size:16px;font-weight:700;margin-bottom:12px}
 .cm .cp-opt{margin:0 0 14px;font-size:15px}
