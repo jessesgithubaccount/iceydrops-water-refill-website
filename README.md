@@ -16,8 +16,7 @@ npm run preview        # serve the production build
 
 | Variable | Used for |
 | --- | --- |
-| `VITE_GOOGLE_MAPS_KEY` | Pin-your-location map in the cart (falls back to Leaflet/CARTO if missing or rejected) |
-| `VITE_CARTO_KEY` | CARTO map tiles for the Leaflet fallback |
+| `VITE_GOOGLE_MAPS_KEY` | Google Maps key for the pin-your-location map in the cart. Set it on your host too (e.g. Vercel environment variables) and redeploy. If it is missing or rejected, a plain Google embed is shown instead |
 
 Vite inlines these into the browser bundle, so restrict both keys by HTTP referrer in their dashboards.
 
@@ -27,7 +26,7 @@ Vite inlines these into the browser bundle, so restrict both keys by HTTP referr
 - `src/data/content.js` products, offers, services, nav
 - `src/data/legal.jsx` Privacy Policy and Terms text
 - `src/hooks/` useStoreOpen (Kenya time), useScrollReveal, useActiveSection
-- `src/lib/` maps.js (Google + Leaflet engines), utils.js (WhatsApp, cart route)
+- `src/lib/` maps.js (Google Maps engine), utils.js (WhatsApp, cart route)
 - `src/components/` Hero, ProductCard, CartModal, MapPicker, Enquiry, ...
 - `src/pages/` Home, LegalPage
 - `src/App.jsx` hash router: `#/cart`, `#/privacy`, `#/terms`
