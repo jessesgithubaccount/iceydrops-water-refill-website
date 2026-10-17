@@ -10,3 +10,6 @@ export const CLOSE_HOUR = 22;
 export const OPEN_LABEL = "9:00 AM";
 export const CLOSE_LABEL = "10:00 PM";
 export const CLOSED_TEXT = `Our Store is closed. Opens at ${OPEN_LABEL}`;
+
+// Optional CARTO basemap key (used by the fallback map). Leave empty if you have none.
+export const CARTO_KEY = "";
